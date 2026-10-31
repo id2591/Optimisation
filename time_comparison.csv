@@ -1,0 +1,4 @@
+Method,Average time (s),Standard error (s)
+K-Medoids (heuristic),0.0022421931615099313,0.00030858646640899586
+MST (heuristic with scipy),0.0048090019030496475,0.0029941749332273357
+MST (heuristic with sklearn),0.0008455945178866386,8.243661537253712e-05
