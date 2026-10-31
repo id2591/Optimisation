@@ -1,0 +1,13 @@
+reset;
+model iris.mod;
+data iris.dat;
+option solver highs;
+solve;
+display {j in 1..m: x[j,j] > 0.5};
+display k;
+display f;
+display _total_solve_time;
+
+printf {j in 1..m: x[j,j] > 0.5} "%d\n", j > results/iris_medoids.txt;
+printf {i in 1..m, j in 1..m: x[i,j] > 0.5} "%d %d\n", i, j > results/iris_affectation.txt;
+printf {i in 1..m} "%d\n", sum {j in 1..m: x[i,j] > 0.5} j > iris_labels.txt;
