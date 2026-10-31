@@ -1,0 +1,152 @@
+---
+title: "Descriptive"
+output: html_document
+date: "2026-10-29"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(GGally)
+library(cluster)
+library(mclust)
+```
+
+
+## Data
+
+```{r}
+data(iris)
+```
+
+```{r}
+summary(iris)
+str(iris)
+```
+
+## Histograms
+
+```{r}
+ggplot(iris, aes(x = Sepal.Length, fill = Species)) + 
+  geom_histogram(alpha = 0.7, position = "identity") 
+
+ggplot(iris, aes(x = Sepal.Width, fill = Species)) + 
+  geom_histogram(alpha = 0.7, position = "identity") 
+
+ggplot(iris, aes(x = Petal.Length, fill = Species)) + 
+  geom_histogram(alpha = 0.7, position = "identity") 
+
+ggplot(iris, aes(x = Petal.Width, fill = Species)) + 
+  geom_histogram(alpha = 0.7, position = "identity") 
+
+```
+
+## Points
+
+```{r}
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
+  geom_point()
+ggplot(iris, aes(x = Petal.Length, y = Petal.Width, color = Species)) +
+  geom_point()
+
+ggplot(iris, aes(x = Sepal.Length, y = Petal.Length, color = Species)) +
+  geom_point()
+ggplot(iris, aes(x = Sepal.Width, y = Petal.Width, color = Species)) +
+  geom_point()
+```
+
+## Boxplots
+
+```{r}
+
+
+p_box_sl <- ggplot(iris, aes(x = Species, y = Sepal.Length, fill = Species)) + 
+  stat_boxplot(geom = "errorbar", width = 0.25) + 
+  geom_boxplot(alpha = 0.8, outlier.colour = 1) +
+  scale_fill_manual(values = colours) +
+  labs(
+    title = "Sepal length depending on the species of iris",
+    x = "Species",
+    y = "Sepal length (cm)"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+
+p_box_sw <- ggplot(iris, aes(x = Species, y = Sepal.Width, fill = Species)) + 
+  stat_boxplot(geom = "errorbar", width = 0.25) + 
+  geom_boxplot(alpha = 0.8, outlier.colour = 1) +
+  scale_fill_manual(values = colours) +
+  labs(
+    title = "Sepal width depending on the species of iris",
+    x = "Species",
+    y = "Sepal width (cm)"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+p_box_pl <- ggplot(iris, aes(x = Species, y = Petal.Length, fill = Species)) + 
+  stat_boxplot(geom = "errorbar", width = 0.25) + 
+  geom_boxplot(alpha = 0.8, outlier.colour = 1) +
+  scale_fill_manual(values = colours) +
+  labs(
+    title = "Petal length depending on the species of iris",
+    x = "Species",
+    y = "Petal length (cm)"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+
+p_box_pw <- ggplot(iris, aes(x = Species, y = Petal.Width, fill = Species)) + 
+  stat_boxplot(geom = "errorbar", width = 0.25) + 
+  geom_boxplot(alpha = 0.8, outlier.colour = 1) +
+  scale_fill_manual(values = colours) +
+  labs(
+    title = "Petal width depending on the species of iris",
+    x = "Species",
+    y = "Petal width (cm)"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
+ 
+
+ggsave("results/iris_boxplot_sl.png", plot = p_box_sl,
+       width = 6, height = 4, dpi = 300)
+ggsave("results/iris_boxplot_sw.png", plot = p_box_sw,
+       width = 6, height = 4, dpi = 300)
+ggsave("results/iris_boxplot_pl.png", plot = p_box_pl,
+       width = 6, height = 4, dpi = 300)
+ggsave("results/iris_boxplot_pw.png", plot = p_box_pw,
+       width = 6, height = 4, dpi = 300)
+```
+
+## Plot matrix
+
+```{r}
+colours <- c(setosa = "#FDE725", versicolor = "#21908C", virginica = "#440154")
+
+p <- ggpairs(
+  iris,
+  columns = 1:4,
+  mapping = aes(color = Species, alpha = 0.7),
+  upper   = list(continuous = "points"),
+  lower   = list(continuous = "points"),
+  diag    = list(continuous = wrap("barDiag", alpha = 0.5)),
+  columnLabels = c("Sepal length", "Sepal width",
+                   "Petal length", "Petal width")
+) +
+  scale_color_manual(values = colours) +
+  scale_fill_manual(values = colours) +
+  theme_minimal()
+
+p
+ggsave("results/iris_scatter.png", p, width = 8, height = 8, dpi = 300)
+```
+
+
+
