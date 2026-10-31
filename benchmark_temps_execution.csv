@@ -1,5 +1,0 @@
-Méthode,Temps moyen (s),Écart-type (s)
-K-Médoides (AMPL - Post-traitement),0.001237766002304852,0.0003161715576867642
-K-Médoides (Heuristique Python),0.0022903761826455595,0.00039121826125641996
-MST Heuristique (SciPy manuel),0.003812179155647755,0.00027509045393311036
-MST Heuristique (Sklearn Single Linkage),0.0008940036408603191,9.866576906275316e-05
